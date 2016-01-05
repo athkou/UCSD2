@@ -28,9 +28,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumWords()
 	{
-		//TODO: Implement this method.  See the Module 1 support videos 
-	    // if you need help.
-		return 0;
+		List<String> temp = getTokens("[a-zA-Z]+");
+		return temp.size();
 	}
 	
 	/**
@@ -44,9 +43,8 @@ public class BasicDocument extends Document
 	@Override
 	public int getNumSentences()
 	{
-	    //TODO: Implement this method.  See the Module 1 support videos 
-        // if you need help.
-		return 0;
+		List<String> temp = getTokens("[^!.?]+");
+		return temp.size();
 	}
 	
 	/**
