@@ -60,10 +60,21 @@ public class BasicDocument extends Document
 	{
 	    //TODO: Implement this method.  See the Module 1 support videos 
         // if you need help.
-        return 0;
+
+		String regex       = "[a-zA-Z]+";
+		List<String> words = getTokens(regex);
+
+		int total = 0;
+
+		for(String word : words)
+		{
+			int num = countSyllables(word);
+			total += num;
+		}
+
+        return total;
 	}
-	
-	
+
 	/* The main method for testing this class. 
 	 * You are encouraged to add your own tests.  */
 	public static void main(String[] args)
@@ -84,8 +95,5 @@ public class BasicDocument extends Document
 		testCase(new BasicDocument("Sentences?!"), 3, 1, 1);
 		testCase(new BasicDocument("Lorem ipsum dolor sit amet, qui ex choro quodsi moderatius, nam dolores explicari forensibus ad."),
 		         32, 15, 1);
-		
-		
 	}
-	
 }

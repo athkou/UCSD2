@@ -25,7 +25,7 @@ public class BasicDocumentGrader {
             out.close();
             System.out.println("\nFlesch scores:");
             br.close();
-
+            //
             br = new BufferedReader(new FileReader("C:\\DEV\\Workspace\\UCSD2\\MOOCTextEditor\\test_cases\\mod1TestCases.txt"));
             out = new PrintWriter("C:\\DEV\\Workspace\\UCSD2\\MOOCTextEditor\\grader_output\\module1.part2.out", "utf-8");
             while ((line = br.readLine()) != null)

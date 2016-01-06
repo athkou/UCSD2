@@ -150,8 +150,13 @@ public abstract class Document
 	/** return the Flesch readability score of this document */
 	public double getFleschScore()
 	{
-	    // TODO: Implement this method
-	    return 0.0;
+		int words     = getNumWords();
+		int sentences = getNumSentences();
+		int syllables = getNumSyllables();
+
+	    return 206.835                                  -
+			   1.015 * (words     / (double) sentences) -
+			   84.6  * (syllables / (double) words);
 	}
 
 	public int FindFirstOf(String word,
