@@ -2,15 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="db9af854-d228-44d2-b5a1-705997d138c0" name="Default" comment="Implemented the getFleschScore">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/MOOCTextEditor/.gitgnore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/bin/document/BasicDocument.class" afterPath="$PROJECT_DIR$/MOOCTextEditor/bin/document/BasicDocument.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/bin/document/Document.class" afterPath="$PROJECT_DIR$/MOOCTextEditor/bin/document/Document.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/MOOCTextEditor.iml" afterPath="$PROJECT_DIR$/MOOCTextEditor/MOOCTextEditor.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/grader_output/module1.part1.out" afterPath="$PROJECT_DIR$/MOOCTextEditor/grader_output/module1.part1.out" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/grader_output/module1.part2.out" afterPath="$PROJECT_DIR$/MOOCTextEditor/grader_output/module1.part2.out" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/src/document/BasicDocument.java" afterPath="$PROJECT_DIR$/MOOCTextEditor/src/document/BasicDocument.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/src/document/BasicDocumentGrader.java" afterPath="$PROJECT_DIR$/MOOCTextEditor/src/document/BasicDocumentGrader.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/MOOCTextEditor/src/document/Document.java" afterPath="$PROJECT_DIR$/MOOCTextEditor/src/document/Document.java" />
     </list>
     <ignored path="UCSD2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -62,10 +59,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Document.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Document.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/MOOCTextEditor/src/document/Document.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.41504854">
+            <state vertical-scroll-proportion="0.0">
               <caret line="158" column="12" selection-start-line="158" selection-start-column="12" selection-end-line="158" selection-end-column="12" />
               <folding>
                 <element signature="docComment;method#Document#0;class#Document#0" expanded="false" />
@@ -76,6 +73,16 @@
                 <element signature="method#FindFirstOf#0;class#Document#0" expanded="false" />
                 <element signature="method#FindFirstNotOf#0;class#Document#0" expanded="false" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitgnore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/MOOCTextEditor/.gitgnore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.123786405">
+              <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -97,6 +104,8 @@
         <option value="$PROJECT_DIR$/MOOCTextEditor/src/document/BasicDocument.java" />
         <option value="$PROJECT_DIR$/MOOCTextEditor/src/document/BasicDocumentGrader.java" />
         <option value="$PROJECT_DIR$/MOOCTextEditor/src/document/Document.java" />
+        <option value="$PROJECT_DIR$/MOOCTextEditor/test_cases/.gitgnore" />
+        <option value="$PROJECT_DIR$/MOOCTextEditor/.gitgnore" />
       </list>
     </option>
   </component>
@@ -139,10 +148,6 @@
               <option name="myItemId" value="UCSD2" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="External Libraries" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ExternalLibrariesNode" />
-            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -164,7 +169,21 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
+              <option name="myItemId" value="test_cases" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="UCSD2" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="MOOCTextEditor" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -178,6 +197,11 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\DEV\Workspace\UCSD2\MOOCTextEditor" />
+    </key>
   </component>
   <component name="RunManager" selected="Application.BasicGrader">
     <configuration default="false" name="BasicDocument" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -508,7 +532,13 @@
       <option name="project" value="LOCAL" />
       <updated>1452097559092</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Implemented the getFleschScore">
+      <created>1452100389316</created>
+      <option name="number" value="00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1452100389316</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -741,7 +771,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/MOOCTextEditor/src/document/Document.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.41504854">
+        <state vertical-scroll-proportion="0.0">
           <caret line="158" column="12" selection-start-line="158" selection-start-column="12" selection-end-line="158" selection-end-column="12" />
           <folding>
             <element signature="docComment;method#Document#0;class#Document#0" expanded="false" />
@@ -752,6 +782,14 @@
             <element signature="method#FindFirstOf#0;class#Document#0" expanded="false" />
             <element signature="method#FindFirstNotOf#0;class#Document#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/MOOCTextEditor/.gitgnore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.123786405">
+          <caret line="3" column="8" selection-start-line="3" selection-start-column="8" selection-end-line="3" selection-end-column="8" />
+          <folding />
         </state>
       </provider>
     </entry>
