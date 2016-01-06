@@ -9,7 +9,10 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public abstract class Document {
+public abstract class Document
+{
+	public static final int NOT_FOUND = -1;
+	public static final int BEGINNING = 0;
 
 	private String text;
 	
@@ -31,7 +34,7 @@ public abstract class Document {
 	 */
 	protected List<String> getTokens(String pattern)
 	{
-		ArrayList<String> tokens = new ArrayList<String>();
+		ArrayList<String> tokens = new ArrayList<>();
 		Pattern tokSplitter = Pattern.compile(pattern);
 		Matcher m = tokSplitter.matcher(text);
 		
@@ -50,11 +53,41 @@ public abstract class Document {
 	// next week when we implement the EfficientDocument class.
 	protected int countSyllables(String word)
 	{
-
-		// TODO: Implement this method so that you can call it from the 
+		// TODO: Implement this method so that you can call it from the
 	    // getNumSyllables method in BasicDocument (module 1) and 
 	    // EfficientDocument (module 2).
-	    return 0;
+		if(word.isEmpty()) return 0;
+
+		word = word.toUpperCase();
+
+		String vowels = "AEUIOY";
+		int begin;
+		int end;
+		int from            = BEGINNING;
+		int syllables_count = 0;
+		int length          = word.length();
+
+		while(from < length)
+		{
+			begin = FindFirstOf(word, vowels, from);
+			if(begin == NOT_FOUND) break;
+			else
+			{
+				++syllables_count;
+				end = FindFirstNotOf(word, vowels, begin);
+				if(end == NOT_FOUND) break;
+				else from = end + 1;
+			}
+		}
+
+		if(syllables_count == 1 && word.charAt(word.length() - 1) == 'E') return 1;
+		if(syllables_count != 0 && word.charAt(word.length() - 1) == 'E')
+		{
+			int letter = FindFirstOf(String.valueOf(word.charAt(word.length() - 2)), vowels, BEGINNING);
+			if(letter == NOT_FOUND) --syllables_count;
+		}
+
+		return syllables_count;
 	}
 	
 	/** A method for testing
@@ -120,7 +153,78 @@ public abstract class Document {
 	    // TODO: Implement this method
 	    return 0.0;
 	}
-	
-	
+
+	public int FindFirstOf(String word,
+						   String chars_to_find,
+						   int from_index)
+	{
+		if(word.isEmpty()) return NOT_FOUND;
+
+		char temp[] = chars_to_find.toCharArray();
+		int index = NOT_FOUND;
+		boolean syllables_found = false;
+		int current_index;
+
+		for(int it = BEGINNING; it != temp.length; ++it)
+		{
+			current_index = word.indexOf(temp[it], from_index);
+			if(current_index != NOT_FOUND)
+			{
+				if(!syllables_found)
+				{
+					syllables_found = true;
+					index = current_index;
+				}
+
+				if(index > current_index) index = current_index;
+			}
+		}
+
+		return index;
+	}
+
+	public int FindFirstNotOf(String word,
+							  String chars_to_search,
+							  int from_index)
+	{
+		if(word.isEmpty()) return NOT_FOUND;
+
+		char temp_word[]  = word.toCharArray();
+		char temp_chars[] = chars_to_search.toCharArray();
+
+		int index = NOT_FOUND;
+		int length = word.length();
+
+		boolean syllable_found = true;
+		boolean first_letter   = true;
+
+		for(int it = from_index; it != length; ++it)
+		{
+			for(int it2 = BEGINNING; it2 != temp_chars.length; ++it2)
+			{
+				if(temp_word[it] != temp_chars[it2]) syllable_found = false;
+				else
+				{
+					syllable_found = true;
+					break;
+				}
+			}
+
+			if(first_letter)
+			{
+				if(!syllable_found)
+				{
+					index = it;
+					first_letter = false;
+				}
+			}
+			else if(!syllable_found)
+			{
+				if(index > it) index = it;
+			}
+		}
+
+		return index;
+	}
 	
 }
