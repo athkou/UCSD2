@@ -113,8 +113,47 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check a is correct ", 65, a);
 		assertEquals("Remove: check element 0 is correct ", (Integer)21, list1.get(0));
 		assertEquals("Remove: check size is correct ", 2, list1.size());
+
+		a = list1.remove(list1.size()-1);
+		assertEquals("Remove: check a is correct ", 42, a);
+		assertEquals("Remove: check last element is correct ", (Integer)21, list1.get(list1.size()-1));
+		assertEquals("Remove: check size is correct ", 1, list1.size());
 		
 		// TODO: Add more tests here
+		try
+		{
+			list1.remove(-1);
+			fail("Check out of bounds");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			list1.remove(list1.size() + 10);
+			fail("Check out of bounds");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			emptyList.remove(0);
+			fail("Check removing from an empty list");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			emptyList.remove(-1);
+			fail("Check out of bounds");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			emptyList.remove(emptyList.size() + 10);
+			fail("Check removing from an empty list");
+		}
+		catch(Exception ex){}
 	}
 	
 	/** Test adding an element into the end of the list, specifically
@@ -124,7 +163,26 @@ public class MyLinkedListTester {
 	public void testAddEnd()
 	{
         // TODO: implement this test
-		
+		list1.add(10);
+		assertEquals("Add: check size is correct ", 4, list1.size());
+		int last = list1.get(list1.size()-1);
+		int prev = list1.get(list1.size()-2);
+		assertEquals("Remove: check last element is correct ", 10, last);
+		assertEquals("Remove: check element before last element is correct ", 42, prev);
+
+		list1.add(15);
+		assertEquals("Add: check size is correct ", 5, list1.size());
+		last = list1.get(list1.size()-1);
+		prev = list1.get(list1.size()-2);
+		assertEquals("Remove: check last element is correct ", 15, last);
+		assertEquals("Remove: check element before last element is correct ", 10, prev);
+
+		list1.add(20);
+		assertEquals("Add: check size is correct ", 6, list1.size());
+		last = list1.get(list1.size()-1);
+		prev = list1.get(list1.size()-2);
+		assertEquals("Remove: check last element is correct ", 20, last);
+		assertEquals("Remove: check element before last element is correct ", 15, prev);
 	}
 
 	
@@ -133,6 +191,17 @@ public class MyLinkedListTester {
 	public void testSize()
 	{
 		// TODO: implement this test
+		int size = list1.size();
+		assertEquals("Remove: check size is correct ", 3, size);
+
+		size = emptyList.size();
+		assertEquals("Remove: check size is correct ", 0, size);
+
+		size = longerList.size();
+		assertEquals("Remove: check size is correct ", LONG_LIST_LENGTH, size);
+
+		size = shortList.size();
+		assertEquals("Remove: check size is correct ", 2, size);
 	}
 
 	
@@ -145,7 +214,31 @@ public class MyLinkedListTester {
 	public void testAddAtIndex()
 	{
         // TODO: implement this test
-		
+		try
+		{
+			list1.add(list1.size(), 55);
+			fail("Check out of bounds");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			list1.add(-1, 55);
+			fail("Check out of bounds");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			list1.add(1, null);
+			fail("Check element for null value");
+		}
+		catch(Exception ex){}
+
+		list1.add(1, 50);
+		assertEquals("add(index, element): check element is correct ", (Integer)50, list1.get(1));
+		assertEquals("add(index, element): check element next to added element is correct ", (Integer)21, list1.get(2));
+		assertEquals("add(index, element): check size is correct ", 4, list1.size());
 	}
 	
 	/** Test setting an element in the list */
