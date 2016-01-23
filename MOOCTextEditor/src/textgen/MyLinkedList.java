@@ -73,8 +73,8 @@ public class MyLinkedList<E> extends AbstractList<E> {
 	 */
 	public void add(int index, E element ) 
 	{
-		if(index < 0 || index > size) throw new IndexOutOfBoundsException("The index must have a value from 0 to the list size.");
-		if(element == null)           throw new NullPointerException("The element can not be null.");
+		if(index < 0 || index >= size) throw new IndexOutOfBoundsException("The index must have a value from 0 to the list size.");
+		if(element == null)            throw new NullPointerException("The element can not be null.");
 
 		LLNode<E> node = new LLNode<>(element);
 

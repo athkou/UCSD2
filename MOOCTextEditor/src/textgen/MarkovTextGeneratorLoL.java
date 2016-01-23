@@ -11,6 +11,9 @@ import java.util.Random;
  */
 public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 
+	public static final int BEGIN     = 0;
+	public static final int NOT_FOUND = -1;
+
 	// The list of words with their next words
 	private List<ListNode> wordList; 
 	
@@ -32,18 +35,56 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	@Override
 	public void train(String sourceText)
 	{
-		// TODO: Implement this method
+		if(sourceText.isEmpty()) return ;
+
+		String text[] = sourceText.split("[ ]+");
+		starter       = text[BEGIN];
+		wordList.add(new ListNode(starter));
+
+
+		for(int it = BEGIN; it != text.length; ++it)
+		{
+			String temp = text[it];
+			int index   = FoundWord(temp);
+
+			if(index != NOT_FOUND) AddNextWordToNode(text, index, it);
+			else
+			{
+				wordList.add(new ListNode(temp));
+				AddNextWordToNode(text, wordList.size() - 1, it);
+			}
+		}
 	}
 	
 	/** 
 	 * Generate the number of words requested.
 	 */
 	@Override
-	public String generateText(int numWords) {
-	    // TODO: Implement this method
-		return null;
+	public String generateText(int numWords)
+	{
+		StringBuilder output = new StringBuilder();
+		String current       = starter;
+
+		output.append(current + " ");
+
+		if(numWords == 0) return "";
+
+		for(int it = BEGIN; it != numWords - 1; ++it)
+		{
+			for(ListNode node : wordList)
+			{
+				if(current.equals(node.getWord()))
+				{
+					current = node.getRandomNextWord(rnGenerator);
+					output.append(current + " ");
+
+					break;
+				}
+			}
+		}
+
+		return output.toString();
 	}
-	
 	
 	// Can be helpful for debugging
 	@Override
@@ -61,11 +102,49 @@ public class MarkovTextGeneratorLoL implements MarkovTextGenerator {
 	@Override
 	public void retrain(String sourceText)
 	{
-		// TODO: Implement this method.
+		wordList.clear();
+		starter = "";
+		train(sourceText);
 	}
 	
-	// TODO: Add any private helper methods you need here.
-	
+	/**
+	 * The method tries to find if the linked list contains
+	 * a node with a String "word"
+	 * @param word A String variable we are looking for it the list.
+	 * @return An integer variable. It has the value -1 if
+	 * the linked list does'n contain the word, or otherwise
+	 * it returns the index of the list that contains the word.
+     */
+	public int FoundWord(String word)
+	{
+		int index = NOT_FOUND;
+		int end   = wordList.size();
+		for(int it = BEGIN; it != end; ++it)
+		{
+			String temp = wordList.get(it).getWord();
+			if(word.equals(temp)) return it;
+		}
+
+		return index;
+	}
+
+	/**
+	 *  The method takes a node from the linked list. The node has a word
+	 *  and a list of next words. A string is added from the string array
+	 *  into the list of next words.
+	 *
+	 * @param words An array of String containing words.
+	 * @param index An integer, which represents the index of the node in the linked list.
+	 * @param position An integer, that is the index of the word from the array "words"
+     */
+	public void AddNextWordToNode(String words[], int index, int position)
+	{
+		ListNode node = wordList.get(index);
+		int next_word = position + 1;
+
+		if(next_word < words.length) node.addNextWord(words[next_word]);
+		else                         node.addNextWord(starter);
+	}
 	
 	/**
 	 * This is a minimal set of tests.  Note that it can be difficult
@@ -141,10 +220,8 @@ class ListNode
 	
 	public String getRandomNextWord(Random generator)
 	{
-		// TODO: Implement this method
-	    // The random number generator should be passed from 
-	    // the MarkovTextGeneratorLoL class
-	    return null;
+	   	int index = generator.nextInt(nextWords.size());
+		return nextWords.get(index);
 	}
 
 	public String toString()
@@ -156,7 +233,6 @@ class ListNode
 		toReturn += "\n";
 		return toReturn;
 	}
-	
 }
 
 

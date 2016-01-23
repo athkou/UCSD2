@@ -87,7 +87,7 @@ public class MarkovTextGeneratorGrader {
 
             feedback += "\nTests complete. Make sure everything looks right.";
 
-            PrintWriter f = new PrintWriter("grader_output/module3.part2.out");
+            PrintWriter f = new PrintWriter("C:/DEV/Workspace/UCSD2/MOOCTextEditor/grader_output/module3.part2.out");
             f.println(feedback);
             f.close();
             return;

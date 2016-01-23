@@ -119,7 +119,6 @@ public class MyLinkedListTester {
 		assertEquals("Remove: check last element is correct ", (Integer)21, list1.get(list1.size()-1));
 		assertEquals("Remove: check size is correct ", 1, list1.size());
 		
-		// TODO: Add more tests here
 		try
 		{
 			list1.remove(-1);
@@ -162,7 +161,6 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddEnd()
 	{
-        // TODO: implement this test
 		list1.add(10);
 		assertEquals("Add: check size is correct ", 4, list1.size());
 		int last = list1.get(list1.size()-1);
@@ -190,7 +188,6 @@ public class MyLinkedListTester {
 	@Test
 	public void testSize()
 	{
-		// TODO: implement this test
 		int size = list1.size();
 		assertEquals("Remove: check size is correct ", 3, size);
 
@@ -213,7 +210,6 @@ public class MyLinkedListTester {
 	@Test
 	public void testAddAtIndex()
 	{
-        // TODO: implement this test
 		try
 		{
 			list1.add(list1.size(), 55);
@@ -245,11 +241,44 @@ public class MyLinkedListTester {
 	@Test
 	public void testSet()
 	{
-	    // TODO: implement this test
-	    
+		try
+		{
+			emptyList.set(1, 1);
+			fail("Check set method on empty list");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			emptyList.set(1, null);
+			fail("Check set method with null element on empty list");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			list1.set(1, null);
+			fail("Check set method with null element on list");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			list1.set(-1, null);
+			fail("Check set method with null element on list");
+		}
+		catch(Exception ex){}
+
+		try
+		{
+			list1.set(-1, 10);
+			fail("Check set method with null element on list");
+		}
+		catch(Exception ex){}
+
+		int old = list1.set(1, 10);
+		assertEquals("add(index, element): check old element is correct ", 21, old);
+		assertEquals("add(index, element): check new element is correct ", (Integer)10, list1.get(1));
+		assertEquals("add(index, element): check size is correct ", 3, list1.size());
 	}
-	
-	
-	// TODO: Optionally add more test methods.
-	
 }
