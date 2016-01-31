@@ -17,7 +17,7 @@ public class DictionaryBenchmarking {
 	    int trials = 500;
 
 	    // The text to test on
-	    String dictFile = "data/dict.txt";
+	    String dictFile = "C:/DEV/Workspace/UCSD2/MOOCTextEditor/data/dict.txt";
 		
 	    // The amount of words to increment each step
 	    // You can play around with this

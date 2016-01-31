@@ -1,21 +1,17 @@
 package spelling;
 
-import java.util.List;
-import java.util.Set;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.*;
 
 /** 
  * An trie data structure that implements the Dictionary and the AutoComplete ADT
- * @author You
+ * @author Athanasios Kourtzis
  *
  */
-public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
-
-    private TrieNode root;
-    private int size;
-    
+public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete
+{
+	public static final int EMPTY       = 0;
+	public static final int FIRST_CHAR  = 0;
+	public static final int SECOND_CHAR = 1;
 
     public AutoCompleteDictionaryTrie()
 	{
@@ -28,56 +24,121 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
 	 * That is, you should convert the string to all lower case as you insert it. */
 	public boolean addWord(String word)
 	{
-	    //TODO: Implement this method.
-	    return false;
+		if(word.isEmpty()) return false;
+		if(word == null) throw new NullPointerException("The String variable can't be a null object");
+
+		String temp = word.toLowerCase();
+		if(isWord(temp)) return false;
+		else
+		{
+			root.insert(temp.charAt(FIRST_CHAR));
+
+			TrieNode node;
+			TrieNode child = root.getChild(temp.charAt(FIRST_CHAR));
+			if(child == null) throw new NullPointerException("The child from the root can't be null");
+
+			for(int it = SECOND_CHAR; it != temp.length(); ++it)
+			{
+				node = child.getChild(temp.charAt(it));
+				if(node == null)
+				{
+					child.insert(temp.charAt(it));
+					if(child.endsWord()) ; //Do nothing
+					else                 child.setEndsWord(false);
+
+					child = child.getChild(temp.charAt(it));
+				}
+				else child = node;
+			}
+
+			child.setEndsWord(true);
+			++size;
+		}
+
+		return true;
 	}
 	
 	/** 
 	 * Return the number of words in the dictionary.  This is NOT necessarily the same
 	 * as the number of TrieNodes in the trie.
 	 */
-	public int size()
-	{
-	    //TODO: Implement this method
-	    return 0;
-	}
-	
+	public int size() { return size; }
 	
 	/** Returns whether the string is a word in the trie */
 	@Override
 	public boolean isWord(String s) 
 	{
-	    // TODO: Implement this method
-		return false;
+		if(IsEmpty() || s.isEmpty()) return false;
+		else
+		{
+			String temp = s.toLowerCase();
+
+			TrieNode node;
+			TrieNode child = root.getChild(temp.charAt(FIRST_CHAR));
+			if(child == null) return false;
+
+			for(int it = SECOND_CHAR; it != temp.length(); ++it)
+			{
+				node = child.getChild(temp.charAt(it));
+				if(node == null)
+				{
+					if(child.endsWord()) return temp.equals(child.getText());
+					else				 return false;
+
+				}
+				else child = node;
+			}
+
+			if(!child.endsWord()) return false;
+			else return temp.equals(child.getText());
+		}
 	}
 
 	/** 
-	 *  * Returns up to the n "best" predictions, including the word itself,
+	 * Returns up to the n "best" predictions, including the word itself,
      * in terms of length
      * If this string is not in the trie, it returns null.
-     * @param text The text to use at the word stem
-     * @param n The maximum number of predictions desired.
+     * @param prefix The text to use at the word stem
+     * @param numCompletions The maximum number of predictions desired.
      * @return A list containing the up to n best predictions
-     */@Override
-     public List<String> predictCompletions(String prefix, int numCompletions) 
-     {
-    	 // TODO: Implement this method
-    	 // This method should implement the following algorithm:
-    	 // 1. Find the stem in the trie.  If the stem does not appear in the trie, return an
-    	 //    empty list
-    	 // 2. Once the stem is found, perform a breadth first search to generate completions
-    	 //    using the following algorithm:
-    	 //    Create a queue (LinkedList) and add the node that completes the stem to the back
-    	 //       of the list.
-    	 //    Create a list of completions to return (initially empty)
-    	 //    While the queue is not empty and you don't have enough completions:
-    	 //       remove the first Node from the queue
-    	 //       If it is a word, add it to the completions list
-    	 //       Add all of its child nodes to the back of the queue
-    	 // Return the list of completions
-    	 
-         return null;
-     }
+	 *
+	 * @throws IllegalArgumentException if numCopletions is a negative number.
+     */
+	@Override
+    public List<String> predictCompletions(String prefix, int numCompletions)
+    {
+		 if(numCompletions < 0) throw new IllegalArgumentException("numCompletions must be a positive integer");
+
+		 LinkedList<TrieNode> queue = new LinkedList<>();
+		 List<String> completions   = new LinkedList<>();
+
+		 if(prefix.isEmpty()) return completions;
+
+		 TrieNode child = FindStem(prefix.toLowerCase());
+
+		 if(child == null) return completions;
+
+		 queue.add(child);
+
+		 while(true)
+		 {
+			 if(numCompletions <= 0 || queue.isEmpty()) break;
+
+			 child = queue.remove();
+
+			 if(child.endsWord())
+			 {
+				 completions.add(child.getText());
+				 --numCompletions;
+			 }
+
+			 PopulateQueue(child, queue);
+		 }
+
+		 return completions;
+    }
+
+	public boolean IsEmpty() {return size == EMPTY; }
 
  	// For debugging
  	public void printTree()
@@ -99,7 +160,37 @@ public class AutoCompleteDictionaryTrie implements  Dictionary, AutoComplete {
  			printNode(next);
  		}
  	}
- 	
 
-	
+	private TrieNode FindStem(String prefix)
+	{
+		int end     = prefix.length();
+
+		TrieNode child = root.getChild(prefix.charAt(FIRST_CHAR));
+		if(child == null) return null;
+
+		TrieNode node;
+
+		for(int it = SECOND_CHAR; it != end; ++it)
+		{
+			node = child.getChild(prefix.charAt(it));
+
+			if(node != null) child = node;
+			else             return null;
+		}
+
+		return child;
+	}
+
+	private void PopulateQueue(TrieNode child, LinkedList<TrieNode> queue)
+	{
+		Set<Character> characters = new TreeSet<>(child.getValidNextCharacters());
+		for(Character ch : characters)
+		{
+			TrieNode temp_node = child.getChild(ch);
+			queue.add(temp_node);
+		}
+	}
+
+	private TrieNode root;
+	private int size;
 }

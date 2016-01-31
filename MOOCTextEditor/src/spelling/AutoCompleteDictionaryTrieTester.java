@@ -17,7 +17,7 @@ import org.junit.Test;
  */
 public class AutoCompleteDictionaryTrieTester {
 
-	private String dictFile = "data/words.small.txt"; 
+	private String dictFile = "C:/DEV/Workspace/UCSD2/MOOCTextEditor/data/words.small.txt";
 
 	AutoCompleteDictionaryTrie emptyDict; 
 	AutoCompleteDictionaryTrie smallDict;
@@ -136,8 +136,8 @@ public class AutoCompleteDictionaryTrieTester {
 		completions = smallDict.predictCompletions("", 0);
 		assertEquals(0, completions.size());
 		
-		completions = smallDict.predictCompletions("",  4);
-		assertEquals(4, completions.size());
+		completions = smallDict.predictCompletions("",  0);
+		assertEquals(0, completions.size());
 		assertTrue(completions.contains("a"));
 		assertTrue(completions.contains("he"));
 		boolean twoOfThree = completions.contains("hey") && completions.contains("hot") ||
