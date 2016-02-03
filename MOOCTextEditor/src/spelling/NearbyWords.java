@@ -1,6 +1,3 @@
-/**
- * 
- */
 package spelling;
 
 import java.util.ArrayList;
@@ -13,13 +10,9 @@ import java.util.List;
  * @author UC San Diego Intermediate MOOC team
  *
  */
-public class NearbyWords implements SpellingSuggest {
-	// THRESHOLD to determine how many words to look through when looking
-	// for spelling suggestions (stops prohibitively long searching)
-	// For use in the Optional Optimization in Part 2.
-	private static final int THRESHOLD = 1000; 
-
-	Dictionary dict;
+public class NearbyWords implements SpellingSuggest
+{
+	public static final int BEGIN = 0;
 
 	public NearbyWords (Dictionary dict) 
 	{
@@ -46,11 +39,10 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param s The original String
 	 * @param currentList is the list of words to append modified words 
 	 * @param wordsOnly controls whether to return only words or any String
-	 * @return
 	 */
 	public void subsitution(String s, List<String> currentList, boolean wordsOnly) {
 		// for each letter in the s and for all possible replacement characters
-		for(int index = 0; index < s.length(); index++){
+		for(int index = BEGIN; index < s.length(); index++){
 			for(int charCode = (int)'a'; charCode <= (int)'z'; charCode++) {
 				// use StringBuffer for an easy interface to permuting the 
 				// letters in the String
@@ -73,10 +65,31 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param s The original String
 	 * @param currentList is the list of words to append modified words 
 	 * @param wordsOnly controls whether to return only words or any String
-	 * @return
 	 */
-	public void insertions(String s, List<String> currentList, boolean wordsOnly ) {
-		// TODO: Implement this method  
+	public void insertions(String s, List<String> currentList, boolean wordsOnly)
+	{
+		if(s.isEmpty()) return ;
+		if(currentList == null) throw new NullPointerException();
+
+		int end = s.length();
+
+		for(int it = BEGIN; it <= end; ++it)
+		{
+			for(int ch = (int) 'a'; ch <= (int) 'z'; ++ch)
+			{
+				StringBuilder temp = new StringBuilder(s);
+				temp.insert(it, (char)ch);
+
+				if(!currentList.contains(temp.toString()))
+				{
+					if (wordsOnly)
+					{
+						if (dict.isWord(temp.toString())) currentList.add(temp.toString());
+					}
+				    else currentList.add(temp.toString());
+				}
+			}
+		}
 	}
 
 	/** Add to the currentList Strings that are one character deletion away
@@ -84,10 +97,28 @@ public class NearbyWords implements SpellingSuggest {
 	 * @param s The original String
 	 * @param currentList is the list of words to append modified words 
 	 * @param wordsOnly controls whether to return only words or any String
-	 * @return
 	 */
-	public void deletions(String s, List<String> currentList, boolean wordsOnly ) {
-		// TODO: Implement this method
+	public void deletions(String s, List<String> currentList, boolean wordsOnly)
+	{
+		if(s.isEmpty()) return ;
+		if(currentList == null) throw new NullPointerException();
+
+		int end = s.length();
+
+		for(int it = BEGIN; it != end; ++it)
+		{
+			StringBuilder temp = new StringBuilder(s);
+			temp.deleteCharAt(it);
+
+			if(!currentList.contains(temp.toString()))
+			{
+				if (wordsOnly)
+				{
+					if (dict.isWord(temp.toString())) currentList.add(temp.toString());
+				}
+				else currentList.add(temp.toString());
+			}
+		}
 	}
 
 	/** Add to the currentList Strings that are one character deletion away
@@ -97,41 +128,45 @@ public class NearbyWords implements SpellingSuggest {
 	 * @return the list of spelling suggestions
 	 */
 	@Override
-	public List<String> suggestions(String word, int numSuggestions) {
+	public List<String> suggestions(String word, int numSuggestions)
+	{
 
 		// initial variables
 		List<String> queue = new LinkedList<String>();     // String to explore
 		HashSet<String> visited = new HashSet<String>();   // to avoid exploring the same  
 														   // string multiple times
 		List<String> retList = new LinkedList<String>();   // words to return
-		 
-		
+
 		// insert first node
 		queue.add(word);
-		visited.add(word);
+		//visited.add(word);
 					
-		// TODO: Implement the remainder of this method, see assignment for algorithm
+		while(!queue.isEmpty())
+		{
+			String temp_word = queue.remove(queue.size()-1);
+			if(!visited.contains(temp_word))
+			{
+				List<String> temp_list = distanceOne(temp_word, true);
+				for(String str : temp_list)
+					if(!retList.contains(str)) retList.add(str);
+
+				numSuggestions -= temp_list.size();
+
+				if(numSuggestions <= 0 || visited.size() > THRESHOLD) break;
+
+				queue.addAll(temp_list);
+				visited.add(temp_word);
+			}
+		}
 		
 		return retList;
 
-	}	
+	}
 
-   public static void main(String[] args) {
-	   /* basic testing code to get started
-	   String word = "i";
-	   // Pass NearbyWords any Dictionary implementation you prefer
-	   Dictionary d = new DictionaryHashSet();
-	   DictionaryLoader.loadDictionary(d, "data/dict.txt");
-	   NearbyWords w = new NearbyWords(d);
-	   List<String> l = w.distanceOne(word, true);
-	   System.out.println("One away word Strings for for \""+word+"\" are:");
-	   System.out.println(l+"\n");
+	// THRESHOLD to determine how many words to look through when looking
+	// for spelling suggestions (stops prohibitively long searching)
+	// For use in the Optional Optimization in Part 2.
+	private static final int THRESHOLD = 500;
 
-	   word = "tailo";
-	   List<String> suggest = w.suggestions(word, 10);
-	   System.out.println("Spelling Suggestions for \""+word+"\" are:");
-	   System.out.println(suggest);
-	   */
-   }
-
+	Dictionary dict;
 }
