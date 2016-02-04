@@ -29,7 +29,7 @@ public class WPTreeGrader {
 
         PrintWriter out;
         try {
-            out = new PrintWriter("grader_output/module5.part3.out");
+            out = new PrintWriter("C:/DEV/Workspace/UCSD2/MOOCTextEditor/grader_output/module5.part3.out");
         } catch (Exception e) {
             e.printStackTrace();
             return;
@@ -38,7 +38,7 @@ public class WPTreeGrader {
         try {
 
             Dictionary dict = new DictionaryHashSet();
-            DictionaryLoader.loadDictionary(dict, "data/grader_dict.txt");
+            DictionaryLoader.loadDictionary(dict, "C:/DEV/Workspace/UCSD2/MOOCTextEditor/data/grader_dict.txt");
             WPTree tree = new WPTree(new NearbyWords(dict)); 
 
             List<String> path = tree.findPath("pool", "spoon");

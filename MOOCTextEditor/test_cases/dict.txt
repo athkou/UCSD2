@@ -36,3 +36,9 @@ day
 way
 away
 soup
+time
+tie
+the
+theme
+tee
+thee
